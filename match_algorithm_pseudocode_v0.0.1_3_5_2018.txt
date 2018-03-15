@@ -1,0 +1,49 @@
+
+
+matching(id or null,popular_list){
+	output[100]
+	if(id==null){
+		output=popular_list;
+	}
+	else{
+		temp=user_info(id);
+		breed=temp.breed;
+		location_st=temp.state;
+		location_ct=temp.zip_code;
+		taste[20]=temp.viewrecord_history;
+		result[100]=Search(location_st,location_ct,breed);
+		
+		bubble_ascend(result[100],'zip');
+		index=0;
+		for all empty_space in result{
+			result[empty_space]=popular_list[index];
+			index++;
+		}
+
+	}
+	return output;
+}
+Search(location_st,location.ct,breed){
+	match_result[100]
+	near_zip[50]=(select * from user_info where zip=location_ct)
+	near_st[20]=(select * from user_info where state=location_st)
+	breed_near[20]=(select similar_breed from breed_chart where breed=breed)
+	breed_match[30]
+
+	for all dog_breed in breed_near{
+		breed_match.append(select * from user_info where breed=breed_near)
+	}
+	for all profile in near_zip[50]{
+		match_result.append(profile)
+	}
+	for all profile in near_state[20]{
+		match_result.append(profile)
+	}
+	for all profile in breed_match[30]{
+		match_result.append(profile)
+	}
+	for all profile in match_result{
+		// remove duplicate;
+	}
+	return match_result;
+}	
