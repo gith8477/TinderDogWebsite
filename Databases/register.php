@@ -39,8 +39,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     if(empty(trim($_POST['password']))){
         $password_err = "Please enter a password.";     
     } 
-    elseif(strlen(trim($_POST['password'])) < 6){
-        $password_err = "Password must have atleast 6 characters.";
+    elseif(strlen(trim($_POST['password'])) < 7){
+        $password_err = "Password must have atleast 7 characters.";
     } 
     else{
         $password = trim($_POST['password']);
@@ -63,7 +63,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Check input errors before inserting in database
     if(empty($username_err) && empty($password_err) && empty($confirm_password_err) && empty($email_err)){
         // Prepare an insert statement
-        $sql = "INSERT INTO user_info(username, password, email) VALUES (?, ?)";
+        $sql = "INSERT INTO user_info(username, password, email) VALUES (?, ?, ?)";
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
             mysqli_stmt_bind_param($stmt, "ss", $param_username, $param_password, $param_email);
@@ -73,7 +73,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             $param_email = $email;
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
-                // Redirect to login page
+                // Redirect to login pages
                 header("location: login.php");
             } else{
                 echo "Something went wrong. Please try again later.";
@@ -102,7 +102,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <div class="wrapper">
         <h2>Sign Up</h2>
         <p>Please fill this form to create an account.</p>
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
         	<div class="form-group <?php echo (!empty($email_err)) ? 'has-error' : ''; ?>">
                 <label>Email</label>
                 <input type="text" name="email"class="form-control" value="<?php echo $email; ?>">

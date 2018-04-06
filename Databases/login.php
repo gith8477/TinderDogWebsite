@@ -1,3 +1,5 @@
+
+
 <?php
 // Include config file
 require_once 'config.php';
@@ -21,7 +23,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Validate credentials
     if(empty($username_err) && empty($password_err)){
         // Prepare a select statement
-        $sql = "SELECT username, password FROM user_info WHERE username = ?";
+        $sql = "SELECT username, password FROM users WHERE username = ?";
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
             mysqli_stmt_bind_param($stmt, "s", $param_username);
@@ -32,7 +34,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 // Store result
                 mysqli_stmt_store_result($stmt);
                 // Check if username exists, if yes then verify password
-                if(mysqli_stmt_num_rows($stmt) == 1){
+                if(mysqli_stmt_num_rows($stmt) == 1){                    
                     // Bind result variables
                     mysqli_stmt_bind_result($stmt, $username, $hashed_password);
                     if(mysqli_stmt_fetch($stmt)){
