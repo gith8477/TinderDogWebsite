@@ -13,7 +13,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         // Prepare a select statement
         $sql = "SELECT id FROM users WHERE username = ?";
         if($stmt = mysqli_prepare($link, $sql)){
-        	echo 'HERE'; //DOES NOT GET HERE
+        	echo 'HERE'; //DOES NOT GET HERE <-------------------------------------------------
             // Bind variables to the prepared statement as parameters
             mysqli_stmt_bind_param($stmt, "s", $param_username);
             // Set parameters
