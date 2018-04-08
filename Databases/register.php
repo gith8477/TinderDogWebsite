@@ -13,6 +13,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         // Prepare a select statement
         $sql = "SELECT id FROM users WHERE username = ?";
         if($stmt = mysqli_prepare($link, $sql)){
+        	echo 'HERE'; //DOES NOT GET HERE
             // Bind variables to the prepared statement as parameters
             mysqli_stmt_bind_param($stmt, "s", $param_username);
             // Set parameters
@@ -37,7 +38,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
     // Validate password
     if(empty(trim($_POST['password']))){
-        $password_err = "Please enter a password.";     
+        $password_err = "Please enter a password.";
     } 
     elseif(strlen(trim($_POST['password'])) < 7){
         $password_err = "Password must have atleast 7 characters.";
