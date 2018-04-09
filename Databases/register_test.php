@@ -5,19 +5,23 @@ $username = $password = $confirm_password = $email = "";
 $username_err = $password_err = $confirm_password_err = $email_err = "";
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
-    if(!empty($_POST['username']) && !empty($_POST['password']) && !empty($_POST['email'])){
-        $username = mysqli_real_escape_string($_POST['username']);
-        $password = md5(mysqli_real_escape_string($_POST['password']));
-        $email = mysqli_real_escape_string($_POST['email']);
-        $check_user = mysqli_query("SELECT * FROM user_info WHERE username = '".$username."'");
+    if(!empty($_POST['username']) && !empty($_POST['password']) && !empty($_POST['email']) && !empty($_POST['confirm_password'])){
+        $username = mysqli_real_escape_string($link, $_POST['username']);
+        echo $_POST['username'];
+        $password = md5(mysqli_real_escape_string($link, $_POST['password']));
+        $email = mysqli_real_escape_string($link, $_POST['email']);
+        $check_user = mysqli_query($link, "SELECT * FROM user_info WHERE username = '".$username."'");
         if(mysqli_num_rows($checkusername) == 1){
             echo "Error: That username is taken. Please go back and try again.";
         }
+        elseif($_POST['password'] != $_POST['confirm_password']){
+            echo "Error: Password not confirmed. Please try again.";
+        }
         else{
-            $registerquery = mysqli_query("INSERT INTO user_info(username, password, email) VALUES('$username', '$password', '$email')");
+            $registerquery = mysqli_query($link, "INSERT INTO user_info(username, password, email) VALUES('".$username."', '".$password."', '".$email."')");
             if($registerquery)
             {
-                echo "<h1>Success: Your account was successfully created.";
+                echo "Success: Your account was successfully created.";
             }
             else
             {
