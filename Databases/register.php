@@ -7,11 +7,10 @@ $username_err = $password_err = $confirm_password_err = $email_err = "";
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     if(!empty($_POST['username']) && !empty($_POST['password']) && !empty($_POST['email']) && !empty($_POST['confirm_password'])){
         $username = mysqli_real_escape_string($link, $_POST['username']);
-        echo $_POST['username'];
         $password = md5(mysqli_real_escape_string($link, $_POST['password']));
         $email = mysqli_real_escape_string($link, $_POST['email']);
         $check_user = mysqli_query($link, "SELECT * FROM user_info WHERE username = '".$username."'");
-        if(mysqli_num_rows($checkusername) == 1){
+        if(mysqli_num_rows($check_user) == 1){
             echo "Error: That username is taken. Please go back and try again.";
         }
         elseif($_POST['password'] != $_POST['confirm_password']){
@@ -50,7 +49,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         <h2>Sign Up</h2>
         <p>Please fill this form to create an account.</p>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
-        	<div class="form-group <?php echo (!empty($email_err)) ? 'has-error' : ''; ?>">
+            <div class="form-group <?php echo (!empty($email_err)) ? 'has-error' : ''; ?>">
                 <label>Email</label>
                 <input type="text" name="email"class="form-control" value="<?php echo $email; ?>">
                 <span class="help-block"><?php echo $email_err; ?></span>
