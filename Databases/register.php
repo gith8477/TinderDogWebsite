@@ -20,11 +20,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             $registerquery = mysqli_query($link, "INSERT INTO user_info(username, password, email) VALUES('".$username."', '".$password."', '".$email."')");
             if($registerquery)
             {
-                echo "Success: Your account was successfully created.";
+                header("Location: login.php");
+                echo "Your account was successfully created.";
+                exit();
             }
             else
             {
-                echo "Error: Sorry, your registration failed. Please go back and try again";    
+                header("Location: register_test.php");
+                echo "Error: Sorry, your registration failed. Please go back and try again";
+                exit();    
             } 
         }
     }
